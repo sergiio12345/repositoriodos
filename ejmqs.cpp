@@ -37,7 +37,7 @@ int main() {
     imprimirArreglo(arreglo, tamano);
 
     quickSort(arreglo, 0, tamano );
-
+     //int ind = particion(arr, 0,7); ind pivot
     cout << "Arreglo ordenado: ";
     imprimirArreglo(arreglo, tamano);
 
