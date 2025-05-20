@@ -1,43 +1,60 @@
 #include <iostream>
-#include <cstring> //strcmp(cad1,cad2);
 using namespace std;
 
-int mistrncmp(char* a,char* b,int len){
-    int i=0;
-      while( *a != '\0' && *b!='\0' && i<len ){
-       if(*a != *b){
-        return *a - *b;
-        } 
-        a++;
-        b++; 
-        i++;
-    }  
-    if(i==len)
-    return 0;
-    
-    return *a - *b;
-}
+int busquedaBinaria(int array[], int n, int x){
+    int inicio=0;
+    int fin=n-1;
+    int medio;
 
-int numeroOcurr(char* a, char* b){
-    int ocurrencias=0;
-    int longitudTexto = strlen(a);
-    int longitudpalabra = strlen(b);
-    
-    for (int i = 0; i <= longitudTexto - longitudpalabra; ++i) {
-        if (mistrncmp(a + i, b,longitudpalabra) == 0) {
-            ocurrencias++;
+    while(inicio <= fin){
+        medio = inicio+(fin-inicio)/2;
+        if(array[medio]==x){
+            return medio;
+        } else if (array[medio]< x){
+            inicio = medio + 1;
+        } else {
+            fin = medio - 1;
         }
     }
 
-    return ocurrencias;
+    return -1;
 }
 
+void ingresarDatos(int par[], int impar[], int n){
+    cout << "Ingrese los n elementos:\n";
+    for(int i = 0; i < n; ++i){
+        if(i % 2 == 0)
+            cin >> par[i/2];
+        else
+            cin >> impar[i/2];
+    }
+}
 int main(){
-	
-	char c1[] = "hola que tal hola que hola";
-	char c2[] = "hola";
-	
-	cout << numeroOcurr(c1,c2) <<endl;
-	
-	return 0;
+
+    int arr[30];
+    int par[15];
+    int impar[15];
+    int n;
+    int x;
+
+    cout << "Ingrese el valor de n: ";
+    cin >> n;
+
+    ingresarDatos(par, impar, n);
+
+    cout << "Ingrese el valor a buscar";
+    cin >> x;
+
+    int  rpar = busquedaBinaria(par,n/2 + n%2 ,x);
+    int rimpar = busquedaBinaria(impar, n/2 ,x);
+
+    if(rpar != -1){
+        cout << "El elemento se encuentra en el indice " << rpar*2 <<endl;
+    }else if (rimpar != -1){
+        cout << "El elemento se encuentra en el indice " << rimpar*2+1 <<endl;
+    }else{
+        cout << "El elemento no se encuentra en el arreglo";
+    }
+
+    return 0; 
 }
